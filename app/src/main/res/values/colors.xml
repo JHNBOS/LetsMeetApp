@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorBackground">#ffffff</color>
+    <color name="colorPrimary">#9c27b0</color>
+    <color name="colorPrimaryDark">#8e24aa</color>
+    <color name="colorPrimaryDarker">#7b1fa2</color>
+    <color name="colorAccent">#8BC34A</color>
+    <color name="divider">#bdbdbd</color>
+
+    <color name="text_no_focus">#cccccc</color>
+    <color name="black">#000000</color>
+    <color name="jet">#3a3a3a</color>
+    <color name="oil">#333333</color>
+    <color name="monsoon">#777777</color>
+    <color name="jumbo">#888888</color>
+    <color name="aluminum">#999999</color>
+    <color name="base">#AAAAAA</color>
+    <color name="iron">#cccccc</color>
+    <color name="white">#ffffff</color>
+    <color name="gold">#fff200</color>
+</resources>

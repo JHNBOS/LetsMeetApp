@@ -1,0 +1,33 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="nl.jhnbos.letsmeet.GroupFragment"
+    android:orientation="vertical">
+
+    <!-- TODO: Update blank fragment layout -->
+    <ListView
+        android:id="@+id/glist"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/colorBackground"
+        android:cacheColorHint="@color/divider"
+        android:divider="@color/divider"
+        android:dividerHeight="1dp"
+        android:footerDividersEnabled="false"
+        android:headerDividersEnabled="false" />
+
+
+    <Button
+        android:id="@+id/createGroupButton"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimaryDark"
+        android:text="Create Group"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textStyle="normal|bold"
+        tools:ignore="HardcodedText" />
+
+</LinearLayout>

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context="nl.jhnbos.letsmeet.SettingsActivity">
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorBackground"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimaryDarker"
+            android:layout_marginBottom="35dp"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+        <ImageView
+            android:id="@+id/logoView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="3dp"
+            android:contentDescription="Logo"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp"
+            app:srcCompat="@drawable/logo"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/settingsText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
+            android:text="Settings"
+            android:textAlignment="center"
+            android:textColor="@color/monsoon"
+            android:textSize="26sp" />
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/text_firstName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp"
+            android:theme="@style/EditTextTheme">
+
+            <EditText
+                android:id="@+id/input_sfirstName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="First Name"
+                tools:ignore="HardcodedText" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/text_lastName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp"
+            android:theme="@style/EditTextTheme">
+
+            <EditText
+                android:id="@+id/input_slastName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Last Name"
+                tools:ignore="HardcodedText" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/text_newPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp"
+            android:theme="@style/EditTextTheme"
+            android:visibility="visible"
+            app:passwordToggleEnabled="true">
+
+            <EditText
+                android:id="@+id/input_newPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="New Password"
+                android:inputType="textPassword"
+                android:textColor="@color/jet"
+                android:textColorLink="@color/colorAccent"
+                tools:ignore="HardcodedText" />
+        </android.support.design.widget.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_newColor"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_gravity="left"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:layout_weight="0.77"
+                android:background="@color/colorPrimaryDark"
+                android:padding="12dp"
+                android:text="Pick Color"
+                android:textColor="@color/white"
+                tools:ignore="HardcodedText,NestedWeights,RtlHardcoded" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/text_infoColor"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_gravity="right"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:gravity="right"
+                android:textColorHint="@color/jet"
+                android:theme="@style/EditTextTheme"
+                android:visibility="visible"
+                app:passwordToggleEnabled="true"
+                tools:ignore="RtlHardcoded">
+
+                <View
+                    android:id="@+id/sview_color"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="right"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginRight="24dp"
+                    android:gravity="right" />
+            </android.support.design.widget.TextInputLayout>
+
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/btn_changeSettings"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:background="@color/colorPrimaryDark"
+            android:padding="12dp"
+            android:text="Change Settings"
+            android:textColor="@android:color/white"
+            tools:ignore="HardcodedText" />
+
+
+    </LinearLayout>
+
+</ScrollView>

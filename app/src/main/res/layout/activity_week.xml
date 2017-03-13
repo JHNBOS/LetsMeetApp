@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="nl.jhnbos.letsmeet.Week">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimaryDarker"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+
+        <nl.jhnbos.letsmeet.WeekView
+            android:id="@+id/weekView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            app:columnGap="8dp"
+            app:dayBackgroundColor="#05000000"
+            app:dayNameLength="length_short"
+            app:eventTextColor="@android:color/white"
+            app:firstDayOfWeek="sunday"
+            app:headerColumnBackground="#ffffffff"
+            app:headerColumnPadding="8dp"
+            app:headerColumnTextColor="#8f000000"
+            app:headerRowBackgroundColor="#ffefefef"
+            app:headerRowPadding="12dp"
+            app:hourHeight="250dp"
+            app:maxHourHeight="250dp"
+            app:minHourHeight="20dp"
+            app:noOfVisibleDays="3"
+            app:nowLineColor="@color/colorPrimary"
+            app:nowLineThickness="2dp"
+            app:showHalfHours="true"
+            app:showNowLine="true"
+            app:textSize="12sp"
+            app:todayBackgroundColor="#1848adff"
+            app:useNewColoringStyle="true" />
+
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>
+
+

@@ -1,0 +1,77 @@
+<resources>
+
+    <style name="itemTextStyle.AppTheme" parent="@android:style/TextAppearance.Widget.IconMenu.Item">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@color/colorPrimaryDarker</item>
+    </style>
+
+    <style name="style_date_picker_dialog" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/jet</item>
+        <item name="android:textColorSecondary">@color/jet</item>
+    </style>
+
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorSecondary">@color/white</item>
+        <item name="actionBarTheme">@style/MyActionBar</item>
+        <item name="android:editTextColor">@color/jet</item>
+=        <item name="android:itemBackground">@color/colorPrimaryDarker</item>
+        <item name="android:itemTextAppearance">@style/itemTextStyle.AppTheme</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDarker</item>
+    </style>
+
+    <style name="AppTheme.ActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimaryDarker</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarker</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="actionBarTheme">@style/MyActionBar</item>
+        <item name="android:textColorPrimary">@color/jet</item>
+        <item name="android:editTextColor">@color/jet</item>
+        <item name="android:itemBackground">@color/colorPrimaryDarker</item>
+        <item name="android:itemTextAppearance">@style/itemTextStyle.AppTheme</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDarker</item>
+    </style>
+
+    <style name="MyActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimaryDarker</item>
+        <item name="android:background">@color/colorPrimaryDarker</item>
+        <item name="background">@color/colorPrimaryDarker</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:editTextColor">@color/white</item>
+        <item name="actionBarItemBackground">@color/colorPrimaryDarker</item>
+        <item name="android:actionBarItemBackground">@color/colorPrimaryDarker</item>
+        <item name="android:windowTitleBackgroundStyle">@color/colorPrimaryDarker</item>
+        <item name="android:actionMenuTextColor">@color/white</item>
+        <item name="android:colorControlNormal">@color/white</item>
+    </style>
+
+    <style name="AppTheme.Dialog" parent="Theme.AppCompat.Dialog">
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:background">@color/colorPrimaryDarker</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/white</item>
+    </style>
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="EditTextTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorControlNormal">@color/colorAccent</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
+        <item name="colorControlHighlight">@color/colorAccent</item>
+    </style>
+
+</resources>

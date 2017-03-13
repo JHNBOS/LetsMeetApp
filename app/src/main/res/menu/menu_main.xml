@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+tools:context="nl.jhnbos.letsmeet.MainActivity">
+
+<item
+    android:id="@+id/settings"
+    android:orderInCategory="1"
+    android:title="Settings" />
+<item
+    android:id="@+id/details"
+    android:orderInCategory="2"
+    android:title="My Details" />
+
+</menu>

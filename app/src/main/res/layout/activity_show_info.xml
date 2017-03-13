@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="nl.jhnbos.letsmeet.ShowInfoActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimaryDarker"
+        android:layout_marginBottom="35dp"
+        app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/text_infoFirstName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.05"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:textColorHint="@color/jet"
+        android:theme="@style/EditTextTheme"
+        android:visibility="visible">
+
+        <EditText
+            android:id="@+id/input_infoFirstName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="First Name"
+            android:inputType="text"
+            android:textColor="@color/jet"
+            android:textColorLink="@color/colorAccent"
+            tools:ignore="HardcodedText" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/text_infoLastName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.05"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:textColorHint="@color/jet"
+        android:theme="@style/EditTextTheme"
+        android:visibility="visible">
+
+        <EditText
+            android:id="@+id/input_infoLastName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Last Name"
+            android:inputType="text"
+            android:textColor="@color/jet"
+            android:textColorLink="@color/colorAccent"
+            tools:ignore="HardcodedText" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/text_infoEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.05"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:textColorHint="@color/jet"
+        android:theme="@style/EditTextTheme"
+        android:visibility="visible">
+
+        <EditText
+            android:id="@+id/input_infoEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:inputType="text"
+            android:textColor="@color/jet"
+            android:textColorLink="@color/colorAccent"
+            tools:ignore="HardcodedText,TextFields" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/text_infoColor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.05"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:textColorHint="@color/jet"
+        android:theme="@style/EditTextTheme"
+        android:visibility="visible">
+
+        <View
+            android:id="@+id/view_color"
+            android:layout_width="match_parent"
+            android:layout_height="35dp" />
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/btn_return"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:padding="12dp"
+        android:text="Return"
+        android:textColor="@android:color/white"
+        tools:ignore="HardcodedText" />
+
+</LinearLayout>

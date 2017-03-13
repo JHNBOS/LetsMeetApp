@@ -1,0 +1,32 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".Week">
+    <item
+        android:id="@+id/create_event"
+        android:orderInCategory="1"
+        android:title="+"
+        android:icon="@drawable/ic_add_white_24dp"
+        android:showAsAction="always" />
+
+    <group android:orderInCategory="99">
+        <item
+            android:id="@+id/action_day_view"
+            android:orderInCategory="100"
+            android:title="Today"
+            app:showAsAction="never|collapseActionView" />
+        <item
+            android:id="@+id/action_three_day_view"
+            android:orderInCategory="101"
+            android:title="3 Days"
+            app:showAsAction="never|collapseActionView" />
+        <item
+            android:id="@+id/action_week_view"
+            android:orderInCategory="103"
+            android:title="7 Days"
+            app:showAsAction="never|collapseActionView" />
+    </group>
+
+
+
+</menu>

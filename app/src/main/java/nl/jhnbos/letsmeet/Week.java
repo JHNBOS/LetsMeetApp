@@ -162,6 +162,7 @@ public class Week extends Activity implements WeekView.ScrollListener, WeekView.
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         setupDateTimeInterpreter(id == R.id.action_week_view);
+
         switch (id) {
             case R.id.create_event:
                 Intent createEvent = new Intent(this, Event.class);

@@ -126,12 +126,14 @@ public class MainActivity extends Activity implements AppCompatCallback {
 
                 startActivity(settingsIntent);
                 return true;
+            /*
             case R.id.details:
                 Intent infoIntent = new Intent(MainActivity.this, ShowInfoActivity.class);
                 infoIntent.putExtra("Email", email);
 
                 startActivity(infoIntent);
                 return true;
+                */
             case android.R.id.home:
                 ShowDialog();
                 return true;

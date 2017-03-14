@@ -23,7 +23,7 @@
         android:id="@+id/createGroupButton"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/colorPrimaryDarker"
         android:text="Create Group"
         android:textAlignment="center"
         android:textColor="@color/white"

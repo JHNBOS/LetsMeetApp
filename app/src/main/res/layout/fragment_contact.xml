@@ -22,7 +22,7 @@
         android:id="@+id/addContactButton"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/colorPrimaryDarker"
         android:text="Add Contact"
         android:textAlignment="center"
         android:textColor="@color/white"

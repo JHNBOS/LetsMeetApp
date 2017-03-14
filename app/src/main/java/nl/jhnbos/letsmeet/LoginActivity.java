@@ -197,7 +197,7 @@ public class LoginActivity extends Activity {
 
                     Toast.makeText(LoginActivity.this, "Login Succeeded!", Toast.LENGTH_SHORT).show();
                     startActivity(intent);
-                    //finish();
+                    finish();
                 }
 
             }

@@ -9,6 +9,13 @@
         android:icon="@drawable/ic_add_white_24dp"
         android:showAsAction="always" />
 
+    <item
+        android:id="@+id/refresh_week"
+        android:orderInCategory="2"
+        android:title="*"
+        android:icon="@drawable/ic_autorenew_white_24dp"
+        android:showAsAction="always" />
+
     <group>
         <item
             android:id="@+id/action_day_view"

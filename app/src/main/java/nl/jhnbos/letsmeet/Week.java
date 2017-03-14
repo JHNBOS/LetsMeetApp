@@ -172,7 +172,10 @@ public class Week extends Activity implements WeekView.ScrollListener, WeekView.
 
                 startActivity(createEvent);
                 return true;
+            case R.id.refresh_week:
+                startActivity(this.getIntent());
 
+                return true;
             case R.id.action_day_view:
                 if (mWeekViewType != TYPE_DAY_VIEW) {
                     item.setChecked(!item.isChecked());

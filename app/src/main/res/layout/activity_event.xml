@@ -22,6 +22,17 @@
             android:layout_marginBottom="35dp"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
+        <TextView
+            android:id="@+id/eventText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="Create New Event"
+            android:textAlignment="center"
+            android:textColor="@color/monsoon"
+            android:textSize="26sp"
+            tools:ignore="HardcodedText" />
+
         <android.support.design.widget.TextInputLayout
             android:id="@+id/text_title"
             android:layout_width="match_parent"
@@ -40,7 +51,7 @@
                 android:layout_weight="1"
                 android:hint="Title"
                 android:inputType="text"
-                android:textColorLink="@color/colorAccent"
+                android:textColor="@color/jet"
                 tools:ignore="HardcodedText" />
         </android.support.design.widget.TextInputLayout>
 
@@ -63,7 +74,7 @@
                 android:layout_weight="1"
                 android:hint="Location"
                 android:inputType="text"
-                android:textColorLink="@color/colorAccent"
+                android:textColor="@color/jet"
                 tools:ignore="HardcodedText" />
         </android.support.design.widget.TextInputLayout>
 
@@ -89,11 +100,11 @@
             android:calendarTextColor="@color/colorAccent"
             android:calendarViewShown="false"
             android:datePickerMode="spinner"
-            android:fitsSystemWindows="false"
+            android:fitsSystemWindows="true"
             android:paddingLeft="24dp"
-            android:theme="@style/style_date_picker_dialog"
             android:paddingRight="24dp"
             android:spinnersShown="true"
+            android:theme="@style/style_date_picker_dialog"
             tools:ignore="UnusedAttribute" />
 
         <TimePicker

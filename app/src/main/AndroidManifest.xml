@@ -27,7 +27,7 @@
 
         <activity
             android:name=".RegisterActivity"
-            android:label="Sign Up">
+            android:label="">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="nl.jhnbos.letsmeet.LoginActivity" />
@@ -40,7 +40,7 @@
 
         <activity
             android:name=".CreateGroupActivity"
-            android:label="Create Group">
+            android:label="">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="nl.jhnbos.letsmeet.MainActivity" />
@@ -48,7 +48,7 @@
 
         <activity
             android:name=".AddContactActivity"
-            android:label="Add Contact">
+            android:label="">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="nl.jhnbos.letsmeet.MainActivity" />
@@ -56,7 +56,7 @@
 
         <activity
             android:name=".SettingsActivity"
-            android:label="Settings">
+            android:label="">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="nl.jhnbos.letsmeet.MainActivity" />
@@ -64,7 +64,7 @@
 
         <activity
             android:name=".ShowInfoActivity"
-            android:label="My Details">
+            android:label="">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="nl.jhnbos.letsmeet.MainActivity" />
@@ -72,7 +72,7 @@
 
         <activity
             android:name=".ShowContactActivity"
-            android:label="Show Contact">
+            android:label="">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="nl.jhnbos.letsmeet.MainActivity" />
@@ -96,7 +96,7 @@
 
         <activity
             android:name=".Event"
-            android:label="Create Event">
+            android:label="">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="nl.jhnbos.letsmeet.Week" />

@@ -11,9 +11,20 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
+        android:layout_marginBottom="35dp"
         android:background="@color/colorPrimaryDarker"
-        android:layout_marginBottom="220dp"
         app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    <TextView
+        android:id="@+id/contactText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="120dp"
+        android:text="Add New Contact"
+        android:textAlignment="center"
+        android:textColor="@color/monsoon"
+        android:textSize="26sp"
+        tools:ignore="HardcodedText" />
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/text_contact"
@@ -21,6 +32,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:paddingLeft="25dp"
+        android:theme="@style/EditTextTheme"
         android:paddingRight="25dp">
 
         <EditText
@@ -28,6 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Contact Email"
+            android:textColor="@color/jet"
             android:inputType="textEmailAddress"
             tools:ignore="HardcodedText" />
     </android.support.design.widget.TextInputLayout>

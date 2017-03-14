@@ -43,7 +43,8 @@
             android:text="Sign Up"
             android:textAlignment="center"
             android:textColor="@color/monsoon"
-            android:textSize="26sp" />
+            android:textSize="26sp"
+            tools:ignore="HardcodedText" />
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/text_firstName"
@@ -65,7 +66,6 @@
                 android:hint="First Name"
                 android:inputType="textCapWords"
                 android:textColor="@color/jet"
-                android:textColorLink="@color/colorAccent"
                 tools:ignore="HardcodedText" />
         </android.support.design.widget.TextInputLayout>
 
@@ -89,7 +89,6 @@
                 android:hint="Last Name"
                 android:inputType="textCapWords"
                 android:textColor="@color/jet"
-                android:textColorLink="@color/colorAccent"
                 tools:ignore="HardcodedText" />
         </android.support.design.widget.TextInputLayout>
 
@@ -113,7 +112,6 @@
                 android:hint="Email"
                 android:inputType="textEmailAddress"
                 android:textColor="@color/jet"
-                android:textColorLink="@color/colorAccent"
                 tools:ignore="HardcodedText" />
         </android.support.design.widget.TextInputLayout>
 
@@ -138,7 +136,6 @@
                 android:hint="Password"
                 android:inputType="textPassword"
                 android:textColor="@color/jet"
-                android:textColorLink="@color/colorAccent"
                 tools:ignore="HardcodedText" />
         </android.support.design.widget.TextInputLayout>
 

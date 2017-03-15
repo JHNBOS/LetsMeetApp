@@ -30,7 +30,7 @@
         android:id="@+id/btnAddMember"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/colorPrimaryDarker"
         android:text="Add To Group"
         android:textColor="@color/white"
         android:textStyle="normal|bold"

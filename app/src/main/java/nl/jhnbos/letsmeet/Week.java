@@ -126,11 +126,9 @@ public class Week extends Activity implements WeekView.ScrollListener, WeekView.
     public void onResume() {
         super.onResume();
 
-        getUserJSON getUserJSON = null;
         GetEventJSON getEventJSON = null;
 
         try {
-            getUserJSON = new getUserJSON();
             getEventJSON = new GetEventJSON();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -139,7 +137,12 @@ public class Week extends Activity implements WeekView.ScrollListener, WeekView.
         eventList.clear();
         events.clear();
 
-        getUserJSON.execute();
+        try {
+            getUser(contact);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
         getEventJSON.execute();
 
         mWeekView.notifyDatasetChanged();
@@ -365,26 +368,7 @@ public class Week extends Activity implements WeekView.ScrollListener, WeekView.
 
     //INITIALIZE USER
     private void initUser(String response) {
-        try {
-            JSONArray jArray = new JSONArray(response);
-            JSONArray ja = jArray.getJSONArray(0);
 
-            Log.d("User JSONArray", ja.toString());
-
-            for (int i = 0; i < ja.length(); i++) {
-                JSONObject jo = ja.getJSONObject(i);
-
-                user.setID(jo.getInt("id"));
-                user.setFirstName(jo.getString("first_name"));
-                user.setLastName(jo.getString("last_name"));
-                user.setPassword(jo.getString("password"));
-                user.setEmail(jo.getString("email"));
-                user.setColor(jo.getString("color"));
-
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
     }
 
     //Get Events From JSON and create new Event object with the data
@@ -510,6 +494,14 @@ public class Week extends Activity implements WeekView.ScrollListener, WeekView.
     }
 
     private void showEventInfo(WeekViewEvent event) {
+
+        User creator = null;
+        try {
+            creator = getUser(event.getUser().toString());
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
         AlertDialog.Builder builder = new AlertDialog.Builder(Week.this, R.style.AppTheme_Dialog);
         builder.setTitle("Event Info");
 
@@ -567,7 +559,9 @@ public class Week extends Activity implements WeekView.ScrollListener, WeekView.
         String start = sdate + "-" + smonth + "-" + syear + " " + shour + ":" + sminute;
         String end = edate + "-" + emonth + "-" + eyear + " " + ehour + ":" + eminute;
 
-        input.setText("User: " + event.getUser() + "\n" + "Title: " + event.getName() + "\n" + "Location: "
+        String name = creator.getFirstName() + " " + creator.getLastName();
+
+        input.setText("User: " + name + "\n" + "Title: " + event.getName() + "\n" + "Location: "
                 + event.getLocation() + "\n" + "Start: " + start + "\n" + "End: " + end);
 
         builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
@@ -631,37 +625,64 @@ public class Week extends Activity implements WeekView.ScrollListener, WeekView.
     }
 
     //GET USER
-    private class getUserJSON extends AsyncTask<Void, Void, String> {
-        String url = GET_USER_URL + "?email='" + URLEncoder.encode(contact, "UTF-8") + "'";
-        ProgressDialog loading;
+    private User getUser(final String email) throws UnsupportedEncodingException {
+        class getUserJSON extends AsyncTask<Void, Void, String> {
+            String url = GET_USER_URL + "?email='" + URLEncoder.encode(email, "UTF-8") + "'";
+            ProgressDialog loading;
 
-        private getUserJSON() throws UnsupportedEncodingException {
+            private getUserJSON() throws UnsupportedEncodingException {
+            }
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                loading = new ProgressDialog(Week.this, R.style.AppTheme_Dialog);
+                loading.setIndeterminate(true);
+                loading.setMessage("Retrieving User...");
+                loading.show();
+            }
+
+            @Override
+            protected String doInBackground(Void... v) {
+                RequestHandler rh = new RequestHandler();
+                String res = rh.sendGetRequest(url);
+                return res;
+
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                loading.dismiss();
+
+                //initUser(s);
+                try {
+                    JSONArray jArray = new JSONArray(s);
+                    JSONArray ja = jArray.getJSONArray(0);
+
+                    Log.d("User JSONArray", ja.toString());
+
+                    for (int i = 0; i < ja.length(); i++) {
+                        JSONObject jo = ja.getJSONObject(i);
+
+                        user.setID(jo.getInt("id"));
+                        user.setFirstName(jo.getString("first_name"));
+                        user.setLastName(jo.getString("last_name"));
+                        user.setPassword(jo.getString("password"));
+                        user.setEmail(jo.getString("email"));
+                        user.setColor(jo.getString("color"));
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
         }
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            loading = new ProgressDialog(Week.this, R.style.AppTheme_Dialog);
-            loading.setIndeterminate(true);
-            loading.setMessage("Retrieving User...");
-            loading.show();
-        }
+        getUserJSON gu = new getUserJSON();
+        gu.execute();
 
-        @Override
-        protected String doInBackground(Void... v) {
-            RequestHandler rh = new RequestHandler();
-            String res = rh.sendGetRequest(url);
-            return res;
-
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            loading.dismiss();
-
-            initUser(s);
-        }
+        return user;
     }
 
 

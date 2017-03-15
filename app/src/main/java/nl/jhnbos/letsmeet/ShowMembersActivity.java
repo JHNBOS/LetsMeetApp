@@ -13,14 +13,18 @@ import android.support.v7.app.AppCompatCallback;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Response;
@@ -32,28 +36,35 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Array;
 import java.net.URLEncoder;
+import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ShowMembersActivity extends Activity implements View.OnClickListener, AppCompatCallback {
 
     //STRINGS
-    public static final String GET_ALL_MEMBERS_URL = "http://jhnbos.nl/android/getAllGroupMembers.php";
-    public static final String DELETE_GROUPMEMBER_URL = "http://jhnbos.nl/android/deleteGroupMember.php";
+    private static final String GET_ALL_MEMBERS_URL = "http://jhnbos.nl/android/getFullMembers.php";
+    private static final String DELETE_GROUPMEMBER_URL = "http://jhnbos.nl/android/deleteGroupMember.php";
     private String group;
 
     //LISTS
-    public ArrayList<String> memberList;
+    private ArrayList<User> memberList;
 
     //LAYOUT
-    public ListView lv;
-    public Button returnButton;
+    private ListView lv;
+    private Button returnButton;
 
     //OBJECTS
-    public ArrayAdapter<String> adapter;
-    public StringRequest stringRequest1;
+    private ArrayAdapter<User> adapter;
+    private StringRequest stringRequest1;
     private HTTP http;
     private AppCompatDelegate delegate;
+
+    private Boolean done = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,12 +91,26 @@ public class ShowMembersActivity extends Activity implements View.OnClickListene
         group = this.getIntent().getStringExtra("Group");
         lv = (ListView) findViewById(R.id.memberlistView);
         returnButton = (Button) findViewById(R.id.btn_mreturn);
-        memberList = new ArrayList<>();
+        memberList = new ArrayList<User>();
 
         http = new HTTP();
 
         //ADAPTER
-        adapter = new ArrayAdapter<String>(this, R.layout.list_item, memberList);
+        adapter = new ArrayAdapter(ShowMembersActivity.this, R.layout.list_item_twoline, android.R.id.text1, memberList){
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+
+                TextView text1 = (TextView) view.findViewById(android.R.id.text1);
+                TextView text2 = (TextView) view.findViewById(android.R.id.text2);
+
+                text1.setText(memberList.get(position).getFirstName() + " " + memberList.get(position).getLastName());
+                text2.setText(memberList.get(position).getEmail());
+
+                return view;
+            }
+
+        };
 
         //Listeners
         returnButton.setOnClickListener(this);
@@ -144,7 +169,7 @@ public class ShowMembersActivity extends Activity implements View.OnClickListene
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
             case R.id.delete:
-                String selected = memberList.get((int) info.id);
+                String selected = memberList.get((int) info.id).getEmail();
                 ShowDialog(selected);
 
                 return true;
@@ -162,20 +187,30 @@ public class ShowMembersActivity extends Activity implements View.OnClickListene
             @Override
             public void onResponse(String response) {
                 try {
+
                     JSONArray jArray = new JSONArray(response);
                     JSONArray ja = jArray.getJSONArray(0);
 
                     for (int i = 0; i < ja.length(); i++) {
                         JSONObject jo = ja.getJSONObject(i);
 
-                        memberList.add(jo.getString("email"));
+                        User user = new User();
+                        user.setID(jo.getInt("id"));
+                        user.setFirstName(jo.getString("first_name"));
+                        user.setLastName(jo.getString("last_name"));
+                        user.setEmail(jo.getString("email"));
+                        user.setColor(jo.getString("color"));
+
+                        memberList.add(user);
                     }
 
                     lv.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -183,9 +218,9 @@ public class ShowMembersActivity extends Activity implements View.OnClickListene
                 Toast.makeText(ShowMembersActivity.this, "Error while reading from url", Toast.LENGTH_SHORT).show();
             }
         });
-
         VolleySingleton.getInstance(this).addToRequestQueue(stringRequest1);
     }
+
 
     //SHOW DIALOG WHEN DELETING GROUP
     private void ShowDialog(final String data) {

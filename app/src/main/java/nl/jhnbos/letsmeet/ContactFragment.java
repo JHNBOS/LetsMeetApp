@@ -20,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,24 +39,21 @@ public class ContactFragment extends Fragment implements View.OnClickListener, A
     //STRINGS
     public static final String GET_ALL_CONTACTS_URL = "http://jhnbos.nl/android/getAllContacts.php";
     public static final String DELETE_CONTACT_URL = "http://jhnbos.nl/android/deleteContact.php";
-    private String email;
-
     //OBJECTS
-    public ArrayList<String> contactsList;
-    public ArrayAdapter<String> adapter;
-    private HTTP http;
-
+    public ArrayList<User> contactsList;
+    public ArrayAdapter<User> adapter;
     //LAYOUT
     public ListView lv;
     public Button addContact;
+    private String email;
+    private HTTP http;
 
     public ContactFragment() {
         // Required empty public constructor
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         LinearLayout rl = (LinearLayout) inflater.inflate(R.layout.fragment_contact, container, false);
 
         //ALLOW HTTP
@@ -80,7 +78,21 @@ public class ContactFragment extends Fragment implements View.OnClickListener, A
         registerForContextMenu(lv);
 
         //ADAPTER
-        adapter = new ArrayAdapter<String>(getActivity(), R.layout.list_item, contactsList);
+        adapter = new ArrayAdapter<User>(getActivity(), R.layout.list_item_twoline, android.R.id.text1, contactsList) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+
+                TextView text1 = (TextView) view.findViewById(android.R.id.text1);
+                TextView text2 = (TextView) view.findViewById(android.R.id.text2);
+
+                text1.setText(contactsList.get(position).getFirstName() + " " + contactsList.get(position).getLastName());
+                text2.setText(contactsList.get(position).getEmail());
+
+                return view;
+            }
+
+        };
 
         // Inflate the layout for this fragment
         return rl;
@@ -119,14 +131,23 @@ public class ContactFragment extends Fragment implements View.OnClickListener, A
 
             for (int i = 0; i < ja.length(); i++) {
                 JSONObject jo = ja.getJSONObject(i);
-                contactsList.add(jo.getString("contact_email"));
-            }
 
-            lv.setAdapter(adapter);
+                User user = new User();
+                user.setID(jo.getInt("id"));
+                user.setFirstName(jo.getString("first_name"));
+                user.setLastName(jo.getString("last_name"));
+                user.setEmail(jo.getString("email"));
+                user.setColor(jo.getString("color"));
+
+                contactsList.add(user);
+            }
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        lv.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
     //REMOVE CONTACT
@@ -227,7 +248,7 @@ public class ContactFragment extends Fragment implements View.OnClickListener, A
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
             case R.id.delete:
-                String selected = contactsList.get((int) info.id);
+                String selected = contactsList.get((int) info.id).getEmail();
                 ShowDialog(selected, email);
                 return true;
             default:
@@ -237,10 +258,8 @@ public class ContactFragment extends Fragment implements View.OnClickListener, A
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        String selected = (String) parent.getItemAtPosition(position);
-
         Intent showContact = new Intent(getActivity(), ShowContactActivity.class);
-        showContact.putExtra("Contact", selected);
+        showContact.putExtra("Contact", contactsList.get(position));
 
         startActivity(showContact);
     }

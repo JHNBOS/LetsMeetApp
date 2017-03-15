@@ -41,7 +41,7 @@ public class MainActivity extends Activity implements AppCompatCallback {
         delegate.setContentView(R.layout.activity_main);
 
         //add the Toolbar
-        Toolbar toolbar= (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         delegate.setSupportActionBar(toolbar);
         delegate.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

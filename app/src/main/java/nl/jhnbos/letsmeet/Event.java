@@ -72,7 +72,7 @@ public class Event extends Activity implements View.OnClickListener, AppCompatCa
         delegate.setContentView(R.layout.activity_event);
 
         //add the Toolbar
-        Toolbar toolbar= (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         delegate.setSupportActionBar(toolbar);
         delegate.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

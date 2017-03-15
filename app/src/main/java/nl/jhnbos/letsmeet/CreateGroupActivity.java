@@ -52,7 +52,7 @@ public class CreateGroupActivity extends Activity implements View.OnClickListene
         delegate.setContentView(R.layout.activity_create_group);
 
         //add the Toolbar
-        Toolbar toolbar= (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         delegate.setSupportActionBar(toolbar);
         delegate.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

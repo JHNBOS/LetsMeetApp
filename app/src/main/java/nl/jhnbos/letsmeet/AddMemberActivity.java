@@ -54,15 +54,12 @@ public class AddMemberActivity extends Activity implements View.OnClickListener,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_member);
 
-        //create the delegate
+        //USE DELEGATE FOR TOOLBAR
         delegate = AppCompatDelegate.create(this, this);
         delegate.onCreate(savedInstanceState);
-
-        //use the delegate to inflate the layout
         delegate.setContentView(R.layout.activity_add_member);
 
-        //add the Toolbar
-        Toolbar toolbar= (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         delegate.setSupportActionBar(toolbar);
         delegate.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -73,10 +70,8 @@ public class AddMemberActivity extends Activity implements View.OnClickListener,
         //INITIALIZING VARIABLES
         group = this.getIntent().getStringExtra("Group");
         email = this.getIntent().getStringExtra("Email");
-
         listView = (ListView) findViewById(R.id.gmlist);
         btnAddMember = (Button) findViewById(R.id.btnAddMember);
-
         contactsList = new ArrayList<>();
         selectedList = new ArrayList<>();
 
@@ -87,7 +82,6 @@ public class AddMemberActivity extends Activity implements View.OnClickListener,
         //ADAPTER
         adapter = new ArrayAdapter<String>(this, R.layout.list_item_multiple, contactsList);
     }
-
 
     /*-----------------------------------------------------------------------------------------------------*/
     //BEGIN OF LISTENERS
@@ -103,7 +97,6 @@ public class AddMemberActivity extends Activity implements View.OnClickListener,
                     int position = checked.keyAt(i);
 
                     if (checked.valueAt(i)) {
-                        String mail = ((TextView) listView.getChildAt(position)).getText().toString();
                         selectedList.add(((TextView) listView.getChildAt(position)).getText().toString());
                     }
                 }
@@ -121,6 +114,7 @@ public class AddMemberActivity extends Activity implements View.OnClickListener,
                 e.printStackTrace();
             }
         }
+
     }
 
     @Override
@@ -218,9 +212,10 @@ public class AddMemberActivity extends Activity implements View.OnClickListener,
                     startActivity(intent);
                     finish();
                 }
-            }
 
+            }
         }
+
         GetJSON gj = new GetJSON();
         gj.execute();
     }
@@ -256,6 +251,7 @@ public class AddMemberActivity extends Activity implements View.OnClickListener,
                 showContacts(s);
             }
         }
+
         GetJSON gj = new GetJSON();
         gj.execute();
     }
@@ -276,7 +272,5 @@ public class AddMemberActivity extends Activity implements View.OnClickListener,
         return null;
     }
 
-
     //END OF METHODS
-
 }

@@ -14,7 +14,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatCallback;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.view.ActionMode;
-import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.TypedValue;
@@ -78,7 +77,7 @@ public class Week extends Activity implements WeekView.ScrollListener, WeekView.
         delegate.setContentView(R.layout.activity_week);
 
         //add the Toolbar
-        Toolbar toolbar= (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         delegate.setSupportActionBar(toolbar);
         delegate.getSupportActionBar().setTitle(group);
         delegate.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -591,39 +590,6 @@ public class Week extends Activity implements WeekView.ScrollListener, WeekView.
         return null;
     }
 
-    //GET GROUPS
-    private class GetEventJSON extends AsyncTask<Void, Void, String> {
-        String url = GET_EVENTS_URL + "?group='" + URLEncoder.encode(group, "UTF-8") + "'";
-        ProgressDialog loading;
-
-        private GetEventJSON() throws UnsupportedEncodingException {
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            loading = new ProgressDialog(Week.this, R.style.AppTheme_Dialog);
-            loading.setIndeterminate(true);
-            loading.setMessage("Retrieving Events...");
-            loading.show();
-        }
-
-        @Override
-        protected String doInBackground(Void... v) {
-            RequestHandler rh = new RequestHandler();
-            String res = rh.sendGetRequest(url);
-            return res;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            loading.dismiss();
-
-            addEvents(s);
-        }
-    }
-
     //GET USER
     private User getUser(final String email) throws UnsupportedEncodingException {
         class getUserJSON extends AsyncTask<Void, Void, String> {
@@ -683,6 +649,39 @@ public class Week extends Activity implements WeekView.ScrollListener, WeekView.
         gu.execute();
 
         return user;
+    }
+
+    //GET GROUPS
+    private class GetEventJSON extends AsyncTask<Void, Void, String> {
+        String url = GET_EVENTS_URL + "?group='" + URLEncoder.encode(group, "UTF-8") + "'";
+        ProgressDialog loading;
+
+        private GetEventJSON() throws UnsupportedEncodingException {
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            loading = new ProgressDialog(Week.this, R.style.AppTheme_Dialog);
+            loading.setIndeterminate(true);
+            loading.setMessage("Retrieving Events...");
+            loading.show();
+        }
+
+        @Override
+        protected String doInBackground(Void... v) {
+            RequestHandler rh = new RequestHandler();
+            String res = rh.sendGetRequest(url);
+            return res;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            loading.dismiss();
+
+            addEvents(s);
+        }
     }
 
 

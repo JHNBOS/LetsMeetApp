@@ -64,7 +64,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener, 
         delegate.setContentView(R.layout.activity_settings);
 
         //add the Toolbar
-        Toolbar toolbar= (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         delegate.setSupportActionBar(toolbar);
         delegate.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

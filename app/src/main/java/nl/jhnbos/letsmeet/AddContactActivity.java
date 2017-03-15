@@ -39,15 +39,12 @@ public class AddContactActivity extends Activity implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_contact);
 
-        //create the delegate
+        //USE DELEGATE FOR TOOLBAR
         delegate = AppCompatDelegate.create(this, this);
         delegate.onCreate(savedInstanceState);
-
-        //use the delegate to inflate the layout
         delegate.setContentView(R.layout.activity_add_contact);
 
-        //add the Toolbar
-        Toolbar toolbar= (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         delegate.setSupportActionBar(toolbar);
         delegate.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -92,7 +89,9 @@ public class AddContactActivity extends Activity implements View.OnClickListener
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
         }
+
     }
 
     @Override
@@ -137,7 +136,6 @@ public class AddContactActivity extends Activity implements View.OnClickListener
                 RequestHandler rh = new RequestHandler();
                 String res = rh.sendPostRequest(url, params);
                 return res;
-
             }
 
             @Override
@@ -157,19 +155,19 @@ public class AddContactActivity extends Activity implements View.OnClickListener
                 }
 
             }
+
         }
+
         GetJSON gj = new GetJSON();
         gj.execute();
     }
 
     @Override
     public void onSupportActionModeStarted(ActionMode mode) {
-
     }
 
     @Override
     public void onSupportActionModeFinished(ActionMode mode) {
-
     }
 
     @Nullable

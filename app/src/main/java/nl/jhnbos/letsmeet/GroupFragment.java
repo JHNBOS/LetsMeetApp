@@ -30,9 +30,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 
 /**
@@ -49,20 +47,17 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
     public static final String UPDATE_GROUP_URL = "http://jhnbos.nl/android/updateGroup.php";
     public static final String DELETE_GROUPMEMBER_URL = "http://jhnbos.nl/android/deleteGroupMember.php";
     private static final String GET_USER_URL = "http://jhnbos.nl/android/getUser.php";
-    private String email;
-
     //LISTS
     public ArrayList<Group> groupsList;
     public ArrayList<String> groupNameList;
     public HashMap<String, String> controlList;
-
     //LAYOUT
     public ListView lv;
     public Button createGroup;
-
     //OBJECTS
     public ArrayAdapter<String> adapter;
     public User user;
+    private String email;
     private HTTP http;
 
     public GroupFragment() {
@@ -217,7 +212,7 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
         try {
             String email = getMember(group);
             http.sendPost(UPDATE_GROUP_URL + "?name='" + URLEncoder.encode(group, "UTF-8")
-                                            + "&email='" + email + "'");
+                    + "&email='" + email + "'");
             onResume();
         } catch (Exception e) {
             e.printStackTrace();
@@ -247,7 +242,7 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
 
 
     //GET RANDOM GROUPMEMBER
-    private String getMember(String group){
+    private String getMember(String group) {
         String selected = "";
         ArrayList<String> membersList = new ArrayList<>();
 
@@ -267,8 +262,8 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
             e.printStackTrace();
         }
 
-        for(int i = 0; i < membersList.size(); i++){
-            if(membersList.get(i) == user.getEmail()){
+        for (int i = 0; i < membersList.size(); i++) {
+            if (membersList.get(i) == user.getEmail()) {
                 membersList.remove(i);
             }
         }
@@ -411,8 +406,6 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
         }
 
 
-
-
     }
 
     public boolean onContextItemSelected(MenuItem item) {
@@ -444,7 +437,7 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
             case R.id.leaveGroup:
                 String currentEmail = user.getEmail();
 
-                if(selected.getCreator() == currentEmail){
+                if (selected.getCreator() == currentEmail) {
                     changeGroupCreator(selected.getName());
                 }
 

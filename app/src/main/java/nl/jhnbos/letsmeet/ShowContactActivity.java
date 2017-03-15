@@ -1,9 +1,7 @@
 package nl.jhnbos.letsmeet;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.annotation.Nullable;
@@ -16,18 +14,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-
 public class ShowContactActivity extends Activity implements View.OnClickListener, AppCompatCallback {
 
     //STRINGS
-    private static final String GET_USER_URL = "http://jhnbos.nl/android/getUser.php";
-    private String contact;
+    private User contact;
 
     //LAYOUT
     private EditText inputFirstName;
@@ -37,7 +27,6 @@ public class ShowContactActivity extends Activity implements View.OnClickListene
     private Button btnReturn;
 
     //OBJECTS
-    private User user;
     private AppCompatDelegate delegate;
 
     @Override
@@ -53,7 +42,7 @@ public class ShowContactActivity extends Activity implements View.OnClickListene
         delegate.setContentView(R.layout.activity_show_contact);
 
         //add the Toolbar
-        Toolbar toolbar= (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         delegate.setSupportActionBar(toolbar);
         delegate.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -62,7 +51,7 @@ public class ShowContactActivity extends Activity implements View.OnClickListene
         StrictMode.setThreadPolicy(policy);
 
         //Intent get extra
-        contact = this.getIntent().getStringExtra("Contact");
+        contact = (User) this.getIntent().getSerializableExtra("Contact");
 
         //Instantiating variables
         inputFirstName = (EditText) findViewById(R.id.input_cinfoFirstName);
@@ -70,23 +59,25 @@ public class ShowContactActivity extends Activity implements View.OnClickListene
         inputEmail = (EditText) findViewById(R.id.input_cinfoEmail);
         viewColor = (View) findViewById(R.id.cview_color);
         btnReturn = (Button) findViewById(R.id.btn_creturn);
-        user = new User();
 
         //Listeners
         btnReturn.setOnClickListener(this);
 
-        //GetUser
-        ShowContactActivity.getUserJSON getUserJSON = null;
+        //Set text layout
+        inputFirstName.setText(contact.getFirstName());
+        inputLastName.setText(contact.getLastName());
+        inputEmail.setText(contact.getEmail());
 
-        try {
-            getUserJSON = new ShowContactActivity.getUserJSON();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        String color = "#" + contact.getColor();
+        int colorInt = Color.parseColor(color);
 
-        getUserJSON.execute();
+        viewColor.setBackgroundColor(colorInt);
+
+        //Set non editable
+        inputFirstName.setEnabled(false);
+        inputLastName.setEnabled(false);
+        inputEmail.setEnabled(false);
     }
-
 
     /*-----------------------------------------------------------------------------------------------------*/
     //BEGIN OF LISTENERS
@@ -114,42 +105,6 @@ public class ShowContactActivity extends Activity implements View.OnClickListene
     /*-----------------------------------------------------------------------------------------------------*/
     //BEGIN OF METHODS
 
-    private void initUser(String response) {
-        try {
-            JSONArray jArray = new JSONArray(response);
-            JSONArray ja = jArray.getJSONArray(0);
-
-            for (int i = 0; i < ja.length(); i++) {
-                JSONObject jo = ja.getJSONObject(i);
-
-                user.setID(jo.getInt("id"));
-                user.setFirstName(jo.getString("first_name"));
-                user.setLastName(jo.getString("last_name"));
-                user.setPassword(jo.getString("password"));
-                user.setEmail(jo.getString("email"));
-                user.setColor(jo.getString("color"));
-
-            }
-
-            inputFirstName.setText(user.getFirstName());
-            inputLastName.setText(user.getLastName());
-            inputEmail.setText(user.getEmail());
-
-            String color = "#" + user.getColor();
-            int colorInt = Color.parseColor(color);
-
-            viewColor.setBackgroundColor(colorInt);
-
-            //Set non editable
-            inputFirstName.setEnabled(false);
-            inputLastName.setEnabled(false);
-            inputEmail.setEnabled(false);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
     @Override
     public void onSupportActionModeStarted(ActionMode mode) {
 
@@ -166,42 +121,7 @@ public class ShowContactActivity extends Activity implements View.OnClickListene
         return null;
     }
 
-    //GET USER
-    private class getUserJSON extends AsyncTask<Void, Void, String> {
-        String url = GET_USER_URL + "?email='" + URLEncoder.encode(contact, "UTF-8") + "'";
-        ProgressDialog loading;
-
-        private getUserJSON() throws UnsupportedEncodingException {
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            loading = new ProgressDialog(ShowContactActivity.this, R.style.AppTheme_Dialog);
-            loading.setIndeterminate(true);
-            loading.setMessage("Retrieving Contact...");
-            loading.show();
-        }
-
-        @Override
-        protected String doInBackground(Void... v) {
-            RequestHandler rh = new RequestHandler();
-            String res = rh.sendGetRequest(url);
-            return res;
-
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            loading.dismiss();
-
-            initUser(s);
-        }
-    }
-
     //END OF METHODS
-
 
 
 }

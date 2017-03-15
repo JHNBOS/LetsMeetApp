@@ -54,7 +54,7 @@ public class ShowInfoActivity extends Activity implements View.OnClickListener, 
         delegate.setContentView(R.layout.activity_show_info);
 
         //add the Toolbar
-        Toolbar toolbar= (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         delegate.setSupportActionBar(toolbar);
         delegate.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

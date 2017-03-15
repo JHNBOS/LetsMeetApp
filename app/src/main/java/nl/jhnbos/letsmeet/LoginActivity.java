@@ -210,6 +210,5 @@ public class LoginActivity extends Activity {
     //END OF METHODS
 
 
-
 }
 

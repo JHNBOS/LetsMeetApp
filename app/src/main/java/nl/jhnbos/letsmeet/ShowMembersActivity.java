@@ -1,10 +1,7 @@
 package nl.jhnbos.letsmeet;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.annotation.Nullable;
@@ -13,7 +10,6 @@ import android.support.v7.app.AppCompatCallback;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -23,7 +19,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,13 +31,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Array;
 import java.net.URLEncoder;
-import java.util.AbstractMap;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class ShowMembersActivity extends Activity implements View.OnClickListener, AppCompatCallback {
 
@@ -79,7 +69,7 @@ public class ShowMembersActivity extends Activity implements View.OnClickListene
         delegate.setContentView(R.layout.activity_show_members);
 
         //add the Toolbar
-        Toolbar toolbar= (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         delegate.setSupportActionBar(toolbar);
         delegate.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -96,7 +86,7 @@ public class ShowMembersActivity extends Activity implements View.OnClickListene
         http = new HTTP();
 
         //ADAPTER
-        adapter = new ArrayAdapter(ShowMembersActivity.this, R.layout.list_item_twoline, android.R.id.text1, memberList){
+        adapter = new ArrayAdapter(ShowMembersActivity.this, R.layout.list_item_twoline, android.R.id.text1, memberList) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);

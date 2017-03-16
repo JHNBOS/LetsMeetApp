@@ -44,14 +44,11 @@ public class CreateGroupActivity extends Activity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_group);
 
-        //create the delegate
+        //USE DELEGATE FOR TOOLBAR
         delegate = AppCompatDelegate.create(this, this);
         delegate.onCreate(savedInstanceState);
-
-        //use the delegate to inflate the layout
         delegate.setContentView(R.layout.activity_create_group);
 
-        //add the Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         delegate.setSupportActionBar(toolbar);
         delegate.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -60,15 +57,15 @@ public class CreateGroupActivity extends Activity implements View.OnClickListene
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        inputName = (EditText) findViewById(R.id.input_group);
-        btnCreateGroup = (Button) findViewById(R.id.btn_createGroup);
-
-        btnCreateGroup.setOnClickListener(this);
-
-        //Initialize variables
+        //INITIALIZING VARIABLES
         controlList = new ArrayList<>();
         currentUser = getIntent().getStringExtra("Email");
         http = new HTTP();
+        inputName = (EditText) findViewById(R.id.input_group);
+        btnCreateGroup = (Button) findViewById(R.id.btn_createGroup);
+
+        //LISTENERS
+        btnCreateGroup.setOnClickListener(this);
     }
 
     /*-----------------------------------------------------------------------------------------------------*/
@@ -76,6 +73,7 @@ public class CreateGroupActivity extends Activity implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
+        //WHEN CLICKED ON CREATE BUTTON
         if (v == btnCreateGroup) {
 
             groupName = inputName.getText().toString();
@@ -110,7 +108,6 @@ public class CreateGroupActivity extends Activity implements View.OnClickListene
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                // app icon in action bar clicked; goto parent activity.
                 super.onBackPressed();
 
                 return true;
@@ -124,8 +121,8 @@ public class CreateGroupActivity extends Activity implements View.OnClickListene
     /*-----------------------------------------------------------------------------------------------------*/
     //BEGIN OF METHODS
 
-    //ADD GROUP
     private void addGroup(final String url, final String url2, final String group, final String email) {
+        //ADD GROUP TO THE DATABASE
         class GetJSON extends AsyncTask<Void, Void, String> {
             ProgressDialog loading;
 
@@ -140,7 +137,6 @@ public class CreateGroupActivity extends Activity implements View.OnClickListene
 
             @Override
             protected String doInBackground(Void... v) {
-
                 HashMap<String, String> params = new HashMap<>();
                 params.put("name", group);
                 params.put("email", email);
@@ -183,6 +179,7 @@ public class CreateGroupActivity extends Activity implements View.OnClickListene
 
             }
         }
+
         GetJSON gj = new GetJSON();
         gj.execute();
     }

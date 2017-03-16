@@ -64,14 +64,11 @@ public class Event extends Activity implements View.OnClickListener, AppCompatCa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
 
-        //create the delegate
+        //USE DELEGATE FOR TOOLBAR
         delegate = AppCompatDelegate.create(this, this);
         delegate.onCreate(savedInstanceState);
-
-        //use the delegate to inflate the layout
         delegate.setContentView(R.layout.activity_event);
 
-        //add the Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         delegate.setSupportActionBar(toolbar);
         delegate.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -85,7 +82,6 @@ public class Event extends Activity implements View.OnClickListener, AppCompatCa
         name = getIntent().getExtras().getString("Name");
         user = (User) getIntent().getSerializableExtra("User");
         http = new HTTP();
-
         inputTitle = (EditText) findViewById(R.id.input_title);
         inputLocation = (EditText) findViewById(R.id.input_location);
         input_startDate = (DatePicker) findViewById(R.id.input_startDate);
@@ -106,8 +102,8 @@ public class Event extends Activity implements View.OnClickListener, AppCompatCa
     /*-------------------------------------------------------------------------*/
     //BEGIN OF METHODS
 
-    //ADD GROUP
     private void addEvent() {
+        //ADD EVENT TO DATABASE
         try {
 
             String response = http.sendPost(
@@ -204,33 +200,27 @@ public class Event extends Activity implements View.OnClickListener, AppCompatCa
     public void onClick(View v) {
         //IF PRESSED ON CREATE EVENT BUTTON
         if (v == btn_createEvent) {
-            //Start date and time
             int startDay = input_startDate.getDayOfMonth();
             int startMonth = (input_startDate.getMonth() + 1);
             int startYear = input_startDate.getYear();
-
             int startHour = input_startTime.getHour();
             int startMinute = input_startTime.getMinute();
 
-            //End date and time
             int endDay = input_endDate.getDayOfMonth();
             int endMonth = (input_endDate.getMonth() + 1);
             int endYear = input_endDate.getYear();
-
             int endHour = input_endTime.getHour();
             int endMinute = input_endTime.getMinute();
 
             startDate = startYear + "-" + startMonth + "-" + startDay + " " + startHour + ":" + startMinute + ":00";
             endDate = endYear + "-" + endMonth + "-" + endDay + " " + endHour + ":" + endMinute + ":00";
 
-            //Set event info
             ev_loc = inputLocation.getText().toString();
             ev_start = startDate.toString();
             ev_end = endDate.toString();
             ev_creator = getIntent().getExtras().getString("EmailC");
             ev_group = getIntent().getExtras().getString("GroupC");
             ev_title = inputTitle.getText().toString();
-
 
             if (ev_title == "" || ev_title.isEmpty()) {
                 Toast.makeText(Event.this, "Please fill in all fields!", Toast.LENGTH_LONG).show();
@@ -250,7 +240,6 @@ public class Event extends Activity implements View.OnClickListener, AppCompatCa
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                // app icon in action bar clicked; goto parent activity.
                 super.onBackPressed();
 
                 return true;

@@ -88,6 +88,7 @@ public class AddMemberActivity extends Activity implements View.OnClickListener,
 
     @Override
     public void onClick(View v) {
+        //WHEN ADD BUTTON IS CLICKED
         if (v == btnAddMember) {
             try {
 
@@ -108,8 +109,6 @@ public class AddMemberActivity extends Activity implements View.OnClickListener,
 
                     addGroupMember(url, group, cEmail);
                 }
-
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -121,7 +120,6 @@ public class AddMemberActivity extends Activity implements View.OnClickListener,
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                // app icon in action bar clicked; goto parent activity.
                 super.onBackPressed();
 
                 return true;
@@ -153,6 +151,7 @@ public class AddMemberActivity extends Activity implements View.OnClickListener,
     //BEGIN OF METHODS
 
     private void showContacts(String response) {
+        //ADD EACH EMAIL ADDRESS FROM ADDED CONTACTS TO THE LISTVIEW
         try {
             JSONArray jArray = new JSONArray(response);
             JSONArray ja = jArray.getJSONArray(0);
@@ -170,8 +169,8 @@ public class AddMemberActivity extends Activity implements View.OnClickListener,
         }
     }
 
-    //ADD GROUPMEMBER(S)
     private void addGroupMember(final String url, final String group, final String cEmail) {
+        //ADD SELECTED GROUPMEMBER(S) TO THE DATABASE
         class GetJSON extends AsyncTask<Void, Void, String> {
             ProgressDialog loading;
 
@@ -186,7 +185,6 @@ public class AddMemberActivity extends Activity implements View.OnClickListener,
 
             @Override
             protected String doInBackground(Void... v) {
-
                 HashMap<String, String> parameters = new HashMap<>();
                 parameters.put("name", group);
                 parameters.put("email", cEmail);
@@ -220,8 +218,8 @@ public class AddMemberActivity extends Activity implements View.OnClickListener,
         gj.execute();
     }
 
-    //GET CONTACTS
     private void getContacts(final String url) {
+        //RETRIEVE ALL ADDED CONTACTS FROM THE DATABASE
         class GetJSON extends AsyncTask<Void, Void, String> {
             ProgressDialog loading;
 
@@ -239,7 +237,6 @@ public class AddMemberActivity extends Activity implements View.OnClickListener,
                 RequestHandler rh = new RequestHandler();
                 String res = rh.sendGetRequest(url);
                 return res;
-
             }
 
             @Override

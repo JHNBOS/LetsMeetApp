@@ -64,19 +64,15 @@ public class Week extends Activity implements WeekView.ScrollListener, WeekView.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_week);
 
-        //Get objects and strings from intent
+        //GET STRINGS FROM INTENT
         group = getIntent().getExtras().getString("Group");
-        user = new User();
         contact = getIntent().getExtras().getString("Email");
 
-        //create the delegate
+        //USE DELEGATE FOR TOOLBAR
         delegate = AppCompatDelegate.create(this, this);
         delegate.onCreate(savedInstanceState);
-
-        //use the delegate to inflate the layout
         delegate.setContentView(R.layout.activity_week);
 
-        //add the Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         delegate.setSupportActionBar(toolbar);
         delegate.getSupportActionBar().setTitle(group);
@@ -86,7 +82,8 @@ public class Week extends Activity implements WeekView.ScrollListener, WeekView.
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        //Lists
+        //INITIALIZING VARIABLES
+        user = new User();
         eventList = new ArrayList<>();
         events = new ArrayList<WeekViewEvent>();
         http = new HTTP();
@@ -215,7 +212,6 @@ public class Week extends Activity implements WeekView.ScrollListener, WeekView.
                 }
                 return true;
             case android.R.id.home:
-                // app icon in action bar clicked; goto parent activity.
                 super.onBackPressed();
 
                 return true;
@@ -305,8 +301,8 @@ public class Week extends Activity implements WeekView.ScrollListener, WeekView.
     /*-----------------------------------------------------------------------------------------------------*/
     //BEGIN OF METHODS
 
-    //SHOW EVENTS
     private void showEvents(int month, int year) {
+        //GET ALL EVENTS OF CURRENT MONTH AND YEAR
         int idset = 0;
         int c = 0;
 
@@ -357,21 +353,13 @@ public class Week extends Activity implements WeekView.ScrollListener, WeekView.
             startCal = null;
             endCal = null;
             event = null;
-
         }
 
         mWeekView.notifyDatasetChanged();
-
     }
 
-
-    //INITIALIZE USER
-    private void initUser(String response) {
-
-    }
-
-    //Get Events From JSON and create new Event object with the data
     private void addEvents(String response) {
+        //ADD NEW EVENT TO THE DATABASE
         try {
             JSONArray jArray = new JSONArray(response);
             JSONArray ja = jArray.getJSONArray(0);
@@ -410,8 +398,8 @@ public class Week extends Activity implements WeekView.ScrollListener, WeekView.
         }
     }
 
-    //DELETE EVENT
     private void deleteEventJSON(final WeekViewEvent event) {
+        //REMOVE SELECTED EVENT FROM THE DATABASE
         class deleteEvent extends AsyncTask<Void, Void, String> {
             ProgressDialog loading;
 
@@ -472,14 +460,13 @@ public class Week extends Activity implements WeekView.ScrollListener, WeekView.
 
     //SHOW DIALOG WHEN DELETING EVENT
     private void ShowDialog(final WeekViewEvent data) {
+        //SHOW AN ALERT DIALOG WHEN REMOVING AN EVENT
         AlertDialog.Builder builder = new AlertDialog.Builder(Week.this, R.style.AppTheme_Dialog);
         builder.setTitle("Remove Event?");
         builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 //TODO
-                //dialog.dismiss();
                 deleteEventJSON(data);
-
             }
         });
         builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
@@ -493,7 +480,7 @@ public class Week extends Activity implements WeekView.ScrollListener, WeekView.
     }
 
     private void showEventInfo(WeekViewEvent event) {
-
+        //SHOW AN ALERT DIALOG WITH EVENT INFO
         User creator = null;
         try {
             creator = getUser(event.getUser().toString());
@@ -559,7 +546,6 @@ public class Week extends Activity implements WeekView.ScrollListener, WeekView.
         String end = edate + "-" + emonth + "-" + eyear + " " + ehour + ":" + eminute;
 
         String name = creator.getFirstName() + " " + creator.getLastName();
-
         input.setText("User: " + name + "\n" + "Title: " + event.getName() + "\n" + "Location: "
                 + event.getLocation() + "\n" + "Start: " + start + "\n" + "End: " + end);
 
@@ -590,8 +576,8 @@ public class Week extends Activity implements WeekView.ScrollListener, WeekView.
         return null;
     }
 
-    //GET USER
     private User getUser(final String email) throws UnsupportedEncodingException {
+        //GET USER INFO FROM CURRENT USER FROM THE DATABASE
         class getUserJSON extends AsyncTask<Void, Void, String> {
             String url = GET_USER_URL + "?email='" + URLEncoder.encode(email, "UTF-8") + "'";
             ProgressDialog loading;
@@ -613,7 +599,6 @@ public class Week extends Activity implements WeekView.ScrollListener, WeekView.
                 RequestHandler rh = new RequestHandler();
                 String res = rh.sendGetRequest(url);
                 return res;
-
             }
 
             @Override
@@ -651,8 +636,8 @@ public class Week extends Activity implements WeekView.ScrollListener, WeekView.
         return user;
     }
 
-    //GET GROUPS
     private class GetEventJSON extends AsyncTask<Void, Void, String> {
+        //GET ALL EVENTS OF THE CURRENT GROUP FROM THE DATABASE
         String url = GET_EVENTS_URL + "?group='" + URLEncoder.encode(group, "UTF-8") + "'";
         ProgressDialog loading;
 

@@ -31,17 +31,16 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class ContactFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemLongClickListener, AdapterView.OnItemClickListener {
 
     //STRINGS
     public static final String GET_ALL_CONTACTS_URL = "http://jhnbos.nl/android/getAllContacts.php";
     public static final String DELETE_CONTACT_URL = "http://jhnbos.nl/android/deleteContact.php";
+
     //OBJECTS
     public ArrayList<User> contactsList;
     public ArrayAdapter<User> adapter;
+
     //LAYOUT
     public ListView lv;
     public Button addContact;
@@ -49,32 +48,30 @@ public class ContactFragment extends Fragment implements View.OnClickListener, A
     private HTTP http;
 
     public ContactFragment() {
-        // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        //GET LAYOUT FROM FRAGMENT
         LinearLayout rl = (LinearLayout) inflater.inflate(R.layout.fragment_contact, container, false);
 
         //ALLOW HTTP
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        //Instantiating variables
+        //INITIALIZING VARIABLES
         email = getActivity().getIntent().getStringExtra("Email");
         lv = (ListView) rl.findViewById(R.id.clist);
         addContact = (Button) rl.findViewById(R.id.addContactButton);
         contactsList = new ArrayList<>();
-
         http = new HTTP();
 
-        //Listeners
+        //LISTENERS
         addContact.setOnClickListener(this);
         lv.setOnItemLongClickListener(this);
         lv.setOnItemClickListener(this);
         lv.setClickable(true);
         lv.setLongClickable(true);
-
         registerForContextMenu(lv);
 
         //ADAPTER
@@ -94,21 +91,19 @@ public class ContactFragment extends Fragment implements View.OnClickListener, A
 
         };
 
-        // Inflate the layout for this fragment
         return rl;
     }
 
     /*-----------------------------------------------------------------------------------------------------*/
     //BEGIN OF METHODS
 
-    //SHOW DIALOG WHEN DELETING GROUP
     private void ShowDialog(final String data, final String email) {
+        //SHOW AN ALERT DIALOG WHEN REMOVING A CONTACT
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AppTheme_Dialog);
         builder.setTitle("Remove Contact?");
         builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 //TODO
-                //dialog.dismiss();
                 removeContact(data, email);
 
             }
@@ -123,8 +118,8 @@ public class ContactFragment extends Fragment implements View.OnClickListener, A
         dialog.show();
     }
 
-    //SHOW CONTACTS IN LISTVIEW
     private void showContacts(String response) {
+        //SHOW ALL ADDED CONTACTS TO THE LISTVIEW
         try {
             JSONArray jArray = new JSONArray(response);
             JSONArray ja = jArray.getJSONArray(0);
@@ -150,8 +145,8 @@ public class ContactFragment extends Fragment implements View.OnClickListener, A
         adapter.notifyDataSetChanged();
     }
 
-    //REMOVE CONTACT
     private void removeContact(String contact, String email) {
+        //REMOVE THE SELECTED CONTACT FROM THE DATABASE
         try {
             http.sendPost(DELETE_CONTACT_URL + "?name='" + URLEncoder.encode(contact, "UTF-8")
                     + "'&email='" + URLEncoder.encode(email, "UTF-8") + "'");
@@ -161,8 +156,8 @@ public class ContactFragment extends Fragment implements View.OnClickListener, A
         }
     }
 
-    //GET CONTACTS
     private void getContacts(final String url) {
+        //RETRIEVE ALL ADD CONTACTS FROM THE DATABASE
         class GetJSON extends AsyncTask<Void, Void, String> {
             ProgressDialog loading;
 
@@ -221,6 +216,7 @@ public class ContactFragment extends Fragment implements View.OnClickListener, A
 
     @Override
     public void onClick(View v) {
+        //WHEN ADD BUTTON IS CLICKED
         if (v == addContact) {
             Intent addContactIntent = new Intent(getActivity(), AddContactActivity.class);
 
@@ -245,6 +241,7 @@ public class ContactFragment extends Fragment implements View.OnClickListener, A
     }
 
     public boolean onContextItemSelected(MenuItem item) {
+        //WHEN ONE OF THE CONTACTS IS LONG CLICKED
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
             case R.id.delete:
@@ -258,6 +255,7 @@ public class ContactFragment extends Fragment implements View.OnClickListener, A
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        //WHEN ONE OF THE CONTACTS IS CLICKED
         Intent showContact = new Intent(getActivity(), ShowContactActivity.class);
         showContact.putExtra("Contact", contactsList.get(position));
 

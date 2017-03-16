@@ -46,14 +46,11 @@ public class ShowInfoActivity extends Activity implements View.OnClickListener, 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_info);
 
-        //create the delegate
+        //USE DELEGATE FOR TOOLBAR
         delegate = AppCompatDelegate.create(this, this);
         delegate.onCreate(savedInstanceState);
-
-        //use the delegate to inflate the layout
         delegate.setContentView(R.layout.activity_show_info);
 
-        //add the Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         delegate.setSupportActionBar(toolbar);
         delegate.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -62,20 +59,18 @@ public class ShowInfoActivity extends Activity implements View.OnClickListener, 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        //Intent get extra
+        //GET STRING FROM INTENT
         email = this.getIntent().getStringExtra("Email");
 
-        //User
+        //INITIALIZING VARIABLES
         user = new User();
-
-        //Instantiating variables
         inputFirstName = (TextView) findViewById(R.id.input_infoFirstName);
         inputLastName = (TextView) findViewById(R.id.input_infoLastName);
         inputEmail = (TextView) findViewById(R.id.input_infoEmail);
         viewColor = (View) findViewById(R.id.view_color);
         btnReturn = (Button) findViewById(R.id.btn_return);
 
-        //Listener
+        //LISTNERS
         btnReturn.setOnClickListener(this);
 
         //GetUser
@@ -97,7 +92,6 @@ public class ShowInfoActivity extends Activity implements View.OnClickListener, 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                // app icon in action bar clicked; goto parent activity.
                 Intent intent = new Intent(ShowInfoActivity.this, MainActivity.class);
                 intent.putExtra("Email", email);
 
@@ -111,6 +105,7 @@ public class ShowInfoActivity extends Activity implements View.OnClickListener, 
 
     @Override
     public void onClick(View v) {
+        //WHEN CLICKED ON RETURN BUTTON
         if (v == btnReturn) {
             Intent intent = new Intent(ShowInfoActivity.this, MainActivity.class);
             intent.putExtra("Email", email);
@@ -124,8 +119,8 @@ public class ShowInfoActivity extends Activity implements View.OnClickListener, 
     /*-----------------------------------------------------------------------------------------------------*/
     //BEGIN OF METHODS
 
-    //INITIALIZE USER
     private void initUser(String response) {
+        //INITIALIZE USER WITH INFO FROM THE DATABASE
         try {
             JSONArray jArray = new JSONArray(response);
             JSONArray ja = jArray.getJSONArray(0);
@@ -139,7 +134,6 @@ public class ShowInfoActivity extends Activity implements View.OnClickListener, 
                 user.setPassword(jo.getString("password"));
                 user.setEmail(jo.getString("email"));
                 user.setColor(jo.getString("color"));
-
             }
 
             inputFirstName.setText(user.getFirstName());
@@ -151,7 +145,6 @@ public class ShowInfoActivity extends Activity implements View.OnClickListener, 
 
             viewColor.setBackgroundColor(colorInt);
 
-            //Set non editable
             inputFirstName.setEnabled(false);
             inputLastName.setEnabled(false);
             inputEmail.setEnabled(false);
@@ -176,8 +169,8 @@ public class ShowInfoActivity extends Activity implements View.OnClickListener, 
         return null;
     }
 
-    //GET USER
     private class getUserJSON extends AsyncTask<Void, Void, String> {
+        //GET INFO OF CURRENT USER FROM THE DATABASE
         String url = GET_USER_URL + "?email='" + URLEncoder.encode(email, "UTF-8") + "'";
         ProgressDialog loading;
 
@@ -198,7 +191,6 @@ public class ShowInfoActivity extends Activity implements View.OnClickListener, 
             RequestHandler rh = new RequestHandler();
             String res = rh.sendGetRequest(url);
             return res;
-
         }
 
         @Override

@@ -56,18 +56,14 @@ public class SettingsActivity extends Activity implements View.OnClickListener, 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        //create the delegate
+        //USE DELEGATE FOR TOOLBAR
         delegate = AppCompatDelegate.create(this, this);
         delegate.onCreate(savedInstanceState);
-
-        //use the delegate to inflate the layout
         delegate.setContentView(R.layout.activity_settings);
 
-        //add the Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         delegate.setSupportActionBar(toolbar);
         delegate.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 
         //ALLOW HTTP
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -77,7 +73,6 @@ public class SettingsActivity extends Activity implements View.OnClickListener, 
         email = getIntent().getStringExtra("Email");
         user = new User();
         chosenColor = "";
-
         inputNewPassword = (EditText) findViewById(R.id.input_newPassword);
         inputFirstName = (EditText) findViewById(R.id.input_sfirstName);
         inputLastName = (EditText) findViewById(R.id.input_slastName);
@@ -106,10 +101,12 @@ public class SettingsActivity extends Activity implements View.OnClickListener, 
 
     @Override
     public void onClick(View v) {
+        //WHEN CLICKED ON PICK BUTTON
         if (v == btnColorPicker) {
             openDialog(false);
         }
 
+        //WHEN CLICKED ON UPDATE BUTTON
         if (v == btnUpdate) {
             runUpdate();
         }
@@ -119,7 +116,6 @@ public class SettingsActivity extends Activity implements View.OnClickListener, 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                // app icon in action bar clicked; goto parent activity.
                 Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
                 intent.putExtra("Email", email);
 
@@ -136,6 +132,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener, 
     //BEGIN OF METHODS
 
     private void updateUser(final String url, final HashMap<String, String> parameters) {
+        //CHANGE CURRENT USER INFO WITH NEW INFO IN THE DATABASE
         class GetJSON extends AsyncTask<Void, Void, String> {
             ProgressDialog loading;
 
@@ -153,7 +150,6 @@ public class SettingsActivity extends Activity implements View.OnClickListener, 
                 RequestHandler rh = new RequestHandler();
                 String res = rh.sendPostRequest(url, parameters);
                 return res;
-
             }
 
             @Override
@@ -170,14 +166,15 @@ public class SettingsActivity extends Activity implements View.OnClickListener, 
                     Toast.makeText(SettingsActivity.this, "Updated user!", Toast.LENGTH_SHORT).show();
                     startActivity(intent);
                 }
-
             }
         }
+
         GetJSON gj = new GetJSON();
         gj.execute();
     }
 
     private void openDialog(boolean supportsAlpha) {
+        //SHOW AN ALERT DIALOG TO CHOOSE A COLOR
         AmbilWarnaDialog dialog = new AmbilWarnaDialog(this, currentColor, new AmbilWarnaDialog.OnAmbilWarnaListener() {
             @Override
             public void onOk(AmbilWarnaDialog dialog, int color) {
@@ -197,8 +194,8 @@ public class SettingsActivity extends Activity implements View.OnClickListener, 
         dialog.show();
     }
 
-    //Run updateUser
     private void runUpdate() {
+        //CHECK EVERY ENTRY TO VERIFY BEFORE UPDAING USER
         String email = user.getEmail();
         int id = user.getID();
 
@@ -268,8 +265,8 @@ public class SettingsActivity extends Activity implements View.OnClickListener, 
 
     }
 
-    //INITIALIZE USER
     private void initUser(String response) {
+        //INITIALIZE USER WITH INFO FROM THE DATABASE
         try {
             JSONArray jArray = new JSONArray(response);
             JSONArray ja = jArray.getJSONArray(0);
@@ -315,8 +312,8 @@ public class SettingsActivity extends Activity implements View.OnClickListener, 
         return null;
     }
 
-    //GET USER
     private class getUserJSON extends AsyncTask<Void, Void, String> {
+        //GET USER INFO FROM THE CURRENT USER
         String url = GET_USER_URL + "?email='" + URLEncoder.encode(email, "UTF-8") + "'";
         ProgressDialog loading;
 

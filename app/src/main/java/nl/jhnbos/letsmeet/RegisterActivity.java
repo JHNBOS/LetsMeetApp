@@ -49,20 +49,16 @@ public class RegisterActivity extends Activity implements AppCompatCallback {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        //create the delegate
+        //USE DELEGATE FOR TOOLBAR
         delegate = AppCompatDelegate.create(this, this);
         delegate.onCreate(savedInstanceState);
-
-        //use the delegate to inflate the layout
         delegate.setContentView(R.layout.activity_register);
 
-        //add the Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         delegate.setSupportActionBar(toolbar);
         delegate.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
-        //Instantiating variables
+        //INITIALIZING VARIABLES
         inputFirstName = (EditText) findViewById(R.id.input_firstName);
         inputLastName = (EditText) findViewById(R.id.input_lastName);
         inputPassword = (EditText) findViewById(R.id.input_password);
@@ -72,11 +68,10 @@ public class RegisterActivity extends Activity implements AppCompatCallback {
         btnColorPick = (Button) findViewById(R.id.btn_color);
         chosenColor = new String();
 
-        //Listeners
+        //LISTENERS
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 String fname = inputFirstName.getText().toString();
                 String lname = inputLastName.getText().toString();
                 String color = chosenColor.toUpperCase();
@@ -123,14 +118,13 @@ public class RegisterActivity extends Activity implements AppCompatCallback {
         });
     }
 
-/*-----------------------------------------------------------------------------------------------------*/
+    /*-----------------------------------------------------------------------------------------------------*/
     //BEGIN OF LISTENERS
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                // app icon in action bar clicked; goto parent activity.
                 super.onBackPressed();
 
                 return true;
@@ -143,8 +137,8 @@ public class RegisterActivity extends Activity implements AppCompatCallback {
     /*-----------------------------------------------------------------------------------------------------*/
     //BEGIN OF METHODS
 
-    //ATTEMPT REGISTER
     private void attemptRegister(final String url, final HashMap<String, String> parameters) {
+        //ADD INFO TO DATABASE TO CREATE A NEW USER
         btnSignUp.setEnabled(false);
         class GetJSON extends AsyncTask<Void, Void, String> {
             ProgressDialog loading;
@@ -160,11 +154,9 @@ public class RegisterActivity extends Activity implements AppCompatCallback {
 
             @Override
             protected String doInBackground(Void... v) {
-
                 RequestHandler rh = new RequestHandler();
                 String res = rh.sendPostRequest(url, parameters);
                 return res;
-
             }
 
             @Override
@@ -177,18 +169,17 @@ public class RegisterActivity extends Activity implements AppCompatCallback {
                     btnSignUp.setEnabled(true);
                 } else {
                     Toast.makeText(RegisterActivity.this, "User Registered!", Toast.LENGTH_SHORT).show();
-                    //Register.this.onBackPressed();
                     finish();
                 }
-
             }
         }
+
         GetJSON gj = new GetJSON();
         gj.execute();
-
     }
 
     private void openDialog(boolean supportsAlpha) {
+        //SHOW A ALERTDIALOG TO CHOOSE A COLOR
         AmbilWarnaDialog dialog = new AmbilWarnaDialog(this, currentColor, new AmbilWarnaDialog.OnAmbilWarnaListener() {
             @Override
             public void onOk(AmbilWarnaDialog dialog, int color) {
@@ -199,7 +190,6 @@ public class RegisterActivity extends Activity implements AppCompatCallback {
 
                 chosenColor = hex.toUpperCase();
                 viewColor.setBackgroundColor(Color.parseColor("#" + chosenColor));
-
             }
 
             @Override

@@ -33,9 +33,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class GroupFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemLongClickListener, AdapterView.OnItemClickListener {
 
     //STRINGS
@@ -47,13 +44,16 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
     public static final String UPDATE_GROUP_URL = "http://jhnbos.nl/android/updateGroup.php";
     public static final String DELETE_GROUPMEMBER_URL = "http://jhnbos.nl/android/deleteGroupMember.php";
     private static final String GET_USER_URL = "http://jhnbos.nl/android/getUser.php";
+
     //LISTS
     public ArrayList<Group> groupsList;
     public ArrayList<String> groupNameList;
     public HashMap<String, String> controlList;
+
     //LAYOUT
     public ListView lv;
     public Button createGroup;
+
     //OBJECTS
     public ArrayAdapter<String> adapter;
     public User user;
@@ -68,36 +68,33 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        //GET LAYOUT OF FRAGMENT
         LinearLayout rl = (LinearLayout) inflater.inflate(R.layout.fragment_group, container, false);
 
         //ALLOW HTTP
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        //Instantiating variables
+        //INITIALIZING VARIABLES
         email = getActivity().getIntent().getStringExtra("Email");
         lv = (ListView) rl.findViewById(R.id.glist);
         createGroup = (Button) rl.findViewById(R.id.createGroupButton);
-
         groupsList = new ArrayList<>();
         groupNameList = new ArrayList<>();
         controlList = new HashMap<>();
         user = new User();
-
         http = new HTTP();
 
-        //Listeners
+        //LISTENERS
         createGroup.setOnClickListener(this);
         lv.setOnItemLongClickListener(this);
         lv.setOnItemClickListener(this);
         lv.setLongClickable(true);
-
         registerForContextMenu(lv);
 
         //ADAPTER
         adapter = new ArrayAdapter<String>(getActivity(), R.layout.list_item, groupNameList);
 
-        // Inflate the layout for this fragment
         return rl;
     }
 
@@ -105,14 +102,13 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
     /*-----------------------------------------------------------------------------------------------------*/
     //BEGIN OF METHODS
 
-    //SHOW DIALOG WHEN DELETING GROUP
     private void ShowDialog(final String data) {
+        //SHOW AN ALERT DIALOG WHEN DELETING GROUP
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AppTheme_Dialog);
         builder.setTitle("Remove Group?");
         builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 //TODO
-                //dialog.dismiss();
                 removeGroup(data);
 
             }
@@ -127,8 +123,8 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
         dialog.show();
     }
 
-    //SHOW GROUPS IN LISTVIEW
     private void showGroups(String response) {
+        //SHOW ALL GROUPS USER IS MEMBER OF IN THE LISTVIEW
         try {
             JSONArray jArray = new JSONArray(response);
             JSONArray ja = jArray.getJSONArray(0);
@@ -153,8 +149,8 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
         }
     }
 
-    //INITIALIZE USER
     private void initUser(String response) {
+        //INITIALIZE CURRENT USER
         try {
             JSONArray jArray = new JSONArray(response);
             JSONArray ja = jArray.getJSONArray(0);
@@ -168,7 +164,6 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
                 user.setPassword(jo.getString("password"));
                 user.setEmail(jo.getString("email"));
                 user.setColor(jo.getString("color"));
-
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -176,8 +171,8 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
     }
 
 
-    //REMOVE GROUP
     private void removeGroup(String group) {
+        //REMOVE GROUP FROM THE DATABASE
         try {
             for (Map.Entry<String, String> entry : controlList.entrySet()) {
                 Object key = entry.getKey();
@@ -196,8 +191,8 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
         }
     }
 
-    //REMOVE GROUPMEMBERS
     private void removeGroupMembers(String group) {
+        //REMOVE ALL GROUPMEMBERS FROM THE DATABASE
         try {
             http.sendPost(DELETE_GROUPMEMBERS_URL + "?name='" + URLEncoder.encode(group, "UTF-8") + "'");
             removeEvents(group);
@@ -207,8 +202,8 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
         }
     }
 
-    //REMOVE GROUPMEMBERS
     private void changeGroupCreator(String group) {
+        //IF THE CREATOR LEAVES THE GROUP, ASSIGN NEW CREATOR
         try {
             String email = getMember(group);
             http.sendPost(UPDATE_GROUP_URL + "?name='" + URLEncoder.encode(group, "UTF-8")
@@ -219,8 +214,8 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
         }
     }
 
-    //REMOVE GROUPMEMBER
     private void removeGroupMember(String group, String email) {
+        //REMOVE A GROUPMEMBER FROM THE DATABASE
         try {
             http.sendPost(DELETE_GROUPMEMBER_URL + "?name='" + URLEncoder.encode(group, "UTF-8")
                     + "'&email='" + URLEncoder.encode(email, "UTF-8") + "'");
@@ -230,8 +225,8 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
         }
     }
 
-    //REMOVE EVENTS
     private void removeEvents(String group) {
+        //REMOVE ALL EVENTS FROM THE DATABASE
         try {
             http.sendPost(DELETE_EVENTS_URL + "?group_name='" + URLEncoder.encode(group, "UTF-8") + "'");
             onResume();
@@ -241,8 +236,8 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
     }
 
 
-    //GET RANDOM GROUPMEMBER
     private String getMember(String group) {
+        //GET RANDOM GROUPMEMBER
         String selected = "";
         ArrayList<String> membersList = new ArrayList<>();
 
@@ -273,8 +268,8 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
     }
 
 
-    //GET GROUPS
     private void getGroups(final String url) {
+        //RETRIEVE ALL GROUPS USER IS MEMBER OF IN THE DATABASE
         class GetJSON extends AsyncTask<Void, Void, String> {
             ProgressDialog loading;
 
@@ -308,8 +303,8 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
         gj.execute();
     }
 
-    //GET GROUPS
     private void getUser(final String url) {
+        //RETRIEVE INFORMATION OF CURRENT USER IN DATABASE
         class GetJSON extends AsyncTask<Void, Void, String> {
             ProgressDialog loading;
 
@@ -338,14 +333,15 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
                 initUser(s);
             }
         }
+
         GetJSON gj = new GetJSON();
         gj.execute();
     }
 
-
     //END OF METHODS
     /*-----------------------------------------------------------------------------------------------------*/
     //BEGIN OF LISTENERS
+
     @Override
     public void onResume() {
         super.onResume();
@@ -370,6 +366,7 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
 
     @Override
     public void onClick(View v) {
+        //WHEN CLICKED ON CREATE BUTTON
         if (v == createGroup) {
             Intent createGroupIntent = new Intent(getActivity(), CreateGroupActivity.class);
 
@@ -388,6 +385,7 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        //WHEN LONG CLICK ON A GROUP
         super.onCreateContextMenu(menu, v, menuInfo);
         MenuInflater inflater = getActivity().getMenuInflater();
 
@@ -430,6 +428,7 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
                 Intent showMemberIntent = new Intent(getActivity(), ShowMembersActivity.class);
 
                 showMemberIntent.putExtra("Group", selected.getName());
+                showMemberIntent.putExtra("Email", email);
 
                 startActivity(showMemberIntent);
 
@@ -451,6 +450,7 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        //WHEN CLICKED ON A GROUP
         Group selected = groupsList.get((int) position);
 
         Intent weekviewIntent = new Intent(getActivity(), Week.class);

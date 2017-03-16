@@ -33,21 +33,19 @@ public class MainActivity extends Activity implements AppCompatCallback {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //create the delegate
+        //USE DELEGATE FOR TOOLBAR
         delegate = AppCompatDelegate.create(this, this);
         delegate.onCreate(savedInstanceState);
-
-        //use the delegate to inflate the layout
         delegate.setContentView(R.layout.activity_main);
 
-        //add the Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         delegate.setSupportActionBar(toolbar);
         delegate.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        //Instantiating variables
+        //INITIALIZING VARIABLES
         email = this.getIntent().getStringExtra("Email");
 
+        //RUN METHODS
         setupTabs();
     }
 
@@ -56,12 +54,12 @@ public class MainActivity extends Activity implements AppCompatCallback {
     //BEGIN OF METHODS
 
     private void setupTabs() {
+        //REPLACE FRAGMENT WHEN PRESSED ON A TAB
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
 
         tabLayout.addTab(tabLayout.newTab().setText("Groups"), 0, true);
         tabLayout.addTab(tabLayout.newTab().setText("Contacts"), 1, false);
 
-        //replace default fragment
         replaceFragment(new GroupFragment());
 
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -91,10 +89,8 @@ public class MainActivity extends Activity implements AppCompatCallback {
     private void onTabTapped(int position) {
         switch (position) {
             case 0:
-                // Do something when first tab is tapped here
                 break;
             default:
-                //Toast.makeText(this, "Tapped " + position, Toast.LENGTH_SHORT);
         }
     }
 
@@ -126,14 +122,6 @@ public class MainActivity extends Activity implements AppCompatCallback {
 
                 startActivity(settingsIntent);
                 return true;
-            /*
-            case R.id.details:
-                Intent infoIntent = new Intent(MainActivity.this, ShowInfoActivity.class);
-                infoIntent.putExtra("Email", email);
-
-                startActivity(infoIntent);
-                return true;
-                */
             case android.R.id.home:
                 ShowDialog();
                 return true;
@@ -142,13 +130,13 @@ public class MainActivity extends Activity implements AppCompatCallback {
     }
 
     private void ShowDialog() {
+        //SHOW A ALERTDIALOG WHEN LOGGING OUT
         AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
         builder.setTitle("Logging out...");
         builder.setMessage("Are you sure you want to log out?");
         builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 //TODO
-                //dialog.dismiss();
                 Intent login = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(login);
                 finish();

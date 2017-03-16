@@ -34,14 +34,11 @@ public class ShowContactActivity extends Activity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_contact);
 
-        //create the delegate
+        //uSE DELEGATE FOR TOOLBAR
         delegate = AppCompatDelegate.create(this, this);
         delegate.onCreate(savedInstanceState);
-
-        //use the delegate to inflate the layout
         delegate.setContentView(R.layout.activity_show_contact);
 
-        //add the Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         delegate.setSupportActionBar(toolbar);
         delegate.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -50,30 +47,30 @@ public class ShowContactActivity extends Activity implements View.OnClickListene
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        //Intent get extra
+        //GET CONTACT FROM INTENT
         contact = (User) this.getIntent().getSerializableExtra("Contact");
 
-        //Instantiating variables
+        //INITIALIZING VARIABLES
         inputFirstName = (EditText) findViewById(R.id.input_cinfoFirstName);
         inputLastName = (EditText) findViewById(R.id.input_cinfoLastName);
         inputEmail = (EditText) findViewById(R.id.input_cinfoEmail);
         viewColor = (View) findViewById(R.id.cview_color);
         btnReturn = (Button) findViewById(R.id.btn_creturn);
 
-        //Listeners
+        //LISTNERS
         btnReturn.setOnClickListener(this);
 
-        //Set text layout
+        //SET TEXT OF TEXTBOXES
         inputFirstName.setText(contact.getFirstName());
         inputLastName.setText(contact.getLastName());
         inputEmail.setText(contact.getEmail());
 
+        //SET BACKGROUND COLOR OF COLORBOX
         String color = "#" + contact.getColor();
         int colorInt = Color.parseColor(color);
-
         viewColor.setBackgroundColor(colorInt);
 
-        //Set non editable
+        //SET TEXTBOXES TO NON EDITABLE
         inputFirstName.setEnabled(false);
         inputLastName.setEnabled(false);
         inputEmail.setEnabled(false);
@@ -86,7 +83,6 @@ public class ShowContactActivity extends Activity implements View.OnClickListene
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                // app icon in action bar clicked; goto parent activity.
                 super.onBackPressed();
 
                 return true;

@@ -43,17 +43,19 @@ public class LoginActivity extends Activity {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
+        //DISABLE AUTOMATICALLY SHOWING KEYBOARD
         getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
         );
 
-        //Instantiating variables
+        //INITIALIZING VARIABLES
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         emailInput = (EditText) findViewById(R.id.input_email);
         passwordInput = (EditText) findViewById(R.id.input_password);
         btnLogin = (Button) findViewById(R.id.btn_login);
         signUpLink = (TextView) findViewById(R.id.link_signup);
 
+        //RUN METHODS
         checkCredentials();
 
         //API URL
@@ -69,7 +71,7 @@ public class LoginActivity extends Activity {
 
         URL = url;
 
-        //Listeners
+        //LISTENERS
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -101,12 +103,11 @@ public class LoginActivity extends Activity {
     }
 
     public void onBackPressed() {
-        // disable going back to the MainActivity
         moveTaskToBack(true);
     }
 
-    //Save username and password
     private void saveCredentials(String email, String password) {
+        //SAVE USERNAME AND PASSWORD WHEN LOGGING IN
         Log.d("Login", "Start Saving preferences");
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("userEmail", email);
@@ -117,8 +118,8 @@ public class LoginActivity extends Activity {
         editor.apply();
     }
 
-    //Check username and password
     private void checkCredentials() {
+        //CHECK IF USERNAME AND PASSWORD ALREADY EXIST WHEN LOGGING IN
         Log.d("Login", "Start Searching preferences");
 
         SharedPreferences.Editor editor = sharedPref.edit();
@@ -151,6 +152,7 @@ public class LoginActivity extends Activity {
     }
 
     private void attemptLogin(final String url) {
+        //CHECK ENTERED USERNAME AND PASSWORD IN THE DATABASE
         btnLogin.setEnabled(false);
         final String email = emailInput.getText().toString();
         final String password = passwordInput.getText().toString();
@@ -169,7 +171,6 @@ public class LoginActivity extends Activity {
 
             @Override
             protected String doInBackground(Void... v) {
-
                 HashMap<String, String> params = new HashMap<>();
                 params.put("email", email);
                 params.put("password", password);
@@ -178,7 +179,6 @@ public class LoginActivity extends Activity {
                 RequestHandler rh = new RequestHandler();
                 String res = rh.sendPostRequest(url, params);
                 return res;
-
             }
 
             @Override
@@ -199,9 +199,9 @@ public class LoginActivity extends Activity {
                     startActivity(intent);
                     finish();
                 }
-
             }
         }
+
         GetJSON gj = new GetJSON();
         gj.execute();
     }

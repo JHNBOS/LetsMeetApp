@@ -57,7 +57,7 @@ public class AddContactActivity extends Activity implements View.OnClickListener
         btnAddContact = (Button) findViewById(R.id.btn_addContact);
         currentUser = getIntent().getExtras().getString("Email");
 
-        //Listeners
+        //LISTENERS
         btnAddContact.setOnClickListener(this);
     }
 
@@ -67,6 +67,7 @@ public class AddContactActivity extends Activity implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
+        //WHEN CLICKED ON THE ADD BUTTON
         if (v == btnAddContact) {
             String contactEmail = inputContact.getText().toString();
             String url = null;
@@ -91,14 +92,12 @@ public class AddContactActivity extends Activity implements View.OnClickListener
             }
 
         }
-
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                // app icon in action bar clicked; goto parent activity.
                 super.onBackPressed();
 
                 return true;
@@ -111,8 +110,8 @@ public class AddContactActivity extends Activity implements View.OnClickListener
     /*-----------------------------------------------------------------------------------------------------*/
     //BEGIN OF METHODS
 
-    //ADD CONTACT
     private void addContact(final String url, final String contact_email, final String email) {
+        //ADD SELECTED CONTACT(S) TO DATABASE
         class GetJSON extends AsyncTask<Void, Void, String> {
             ProgressDialog loading;
 
@@ -127,11 +126,9 @@ public class AddContactActivity extends Activity implements View.OnClickListener
 
             @Override
             protected String doInBackground(Void... v) {
-
                 HashMap<String, String> params = new HashMap<>();
                 params.put("contact_email", contact_email);
                 params.put("email", email);
-
 
                 RequestHandler rh = new RequestHandler();
                 String res = rh.sendPostRequest(url, params);
@@ -155,7 +152,6 @@ public class AddContactActivity extends Activity implements View.OnClickListener
                 }
 
             }
-
         }
 
         GetJSON gj = new GetJSON();
